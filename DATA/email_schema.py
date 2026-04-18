@@ -31,7 +31,7 @@ email_prompts ={
         - Date of the Meeting: {Date}
         - Time of the Meeting: {Time}
         - Your Name: {Your_Name}
-        """
+    """
     },
     "doctor": {
         "role": "You are an assistant specialized in drafting appointment request emails.",
@@ -64,7 +64,7 @@ email_prompts ={
         - About the Product: {About_Product}
         - Date for Meeting: {Date}
         - Your Name: {Your_Name}
-        """
+    """
     },
     # Added follow-up email type for personal use
     "followup": {
