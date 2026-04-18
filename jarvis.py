@@ -31,7 +31,8 @@ KNOWLEDGEBASE_PATH = 'DATA/KNOWLEDGEBASE/disaster_data_converted.md'
 
 # Keep last N turns for context window - increase if you want more memory,
 # but be mindful of token limits (gpt-3.5-turbo: ~4k, gpt-4: ~8k)
-CONTEXT_WINDOW_TURNS = 20
+# Bumped from 20 to 30 - I'm using gpt-4 and want longer conversation memory
+CONTEXT_WINDOW_TURNS = 30
 
 
 def load_chat_history() -> list:
@@ -97,8 +98,4 @@ def get_ai_response(user_input: str, history: list, system_prompt: str) -> str:
     openai.api_key = os.getenv('OPENAI_API_KEY')
     messages = [{'role': 'system', 'content': system_prompt}]
     for entry in history[-CONTEXT_WINDOW_TURNS:]:  # Keep last N turns for context window
-        messages.append({'role': entry['role'], 'content': entry['content']})
-    messages.append({'role': 'user', 'content': user_input})
-
-    response = openai.ChatCompletion.create(
-        model=os.gete
+        messages.appe
