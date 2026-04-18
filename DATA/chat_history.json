@@ -46,5 +46,9 @@
     {
         "user": "my full name is ganesh nikhil",
         "assistant": "I see, thank you for confirming your full name. As an AI, I don't require or store personal information like names unless it's necessary for our conversation context. In this case, knowing your name helps me address you appropriately during our discussion. Is there a specific topic or question you'd like to discuss today?"
+    },
+    {
+        "user": "What is your name?",
+        "assistant": "I am J.A.R.V.I.S., your personal AI assistant. How can I help you today?"
     }
 ]
