@@ -65,5 +65,16 @@ email_prompts ={
         - Date for Meeting: {Date}
         - Your Name: {Your_Name}
         """
+    },
+    # Added follow-up email type for personal use
+    "followup": {
+        "role": "You are an assistant specialized in drafting professional follow-up emails.",
+        "prompt": """
+        Please provide the following details for a follow-up email:
+        - Recipient's Name: {Recipient_Name}
+        - Subject of Previous Email: {Previous_Subject}
+        - Days Since Last Email: {Days_Since}
+        - Your Name: {Your_Name}
+    """
     }
 }
