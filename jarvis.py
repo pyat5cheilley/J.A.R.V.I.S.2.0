@@ -29,6 +29,10 @@ logger = logging.getLogger(__name__)
 CHAT_HISTORY_PATH = 'DATA/chat_history.json'
 KNOWLEDGEBASE_PATH = 'DATA/KNOWLEDGEBASE/disaster_data_converted.md'
 
+# Keep last N turns for context window - increase if you want more memory,
+# but be mindful of token limits (gpt-3.5-turbo: ~4k, gpt-4: ~8k)
+CONTEXT_WINDOW_TURNS = 20
+
 
 def load_chat_history() -> list:
     """Load existing chat history from JSON file."""
@@ -92,51 +96,9 @@ def get_ai_response(user_input: str, history: list, system_prompt: str) -> str:
 
     openai.api_key = os.getenv('OPENAI_API_KEY')
     messages = [{'role': 'system', 'content': system_prompt}]
-    for entry in history[-10:]:  # Keep last 10 turns for context window
+    for entry in history[-CONTEXT_WINDOW_TURNS:]:  # Keep last N turns for context window
         messages.append({'role': entry['role'], 'content': entry['content']})
     messages.append({'role': 'user', 'content': user_input})
 
     response = openai.ChatCompletion.create(
-        model=os.getenv('OPENAI_MODEL', 'gpt-4o'),
-        messages=messages,
-        temperature=0.7
-    )
-    return response.choices[0].message['content'].strip()
-
-
-def main():
-    """Main REPL loop for J.A.R.V.I.S. 2.0."""
-    logger.info('J.A.R.V.I.S. 2.0 initializing...')
-    history = load_chat_history()
-    kb_content = load_knowledgebase()
-    system_prompt = build_system_prompt(kb_content)
-
-    print('\nJ.A.R.V.I.S. 2.0 online. Type "exit" to quit.\n')
-
-    while True:
-        try:
-            user_input = input('You: ').strip()
-            if not user_input:
-                continue
-            if user_input.lower() in ('exit', 'quit', 'bye'):
-                print('J.A.R.V.I.S.: Goodbye.')
-                save_chat_history(history)
-                break
-
-            append_to_history(history, 'user', user_input)
-            response = get_ai_response(user_input, history, system_prompt)
-            append_to_history(history, 'assistant', response)
-            save_chat_history(history)
-
-            print(f'J.A.R.V.I.S.: {response}\n')
-
-        except KeyboardInterrupt:
-            print('\nJ.A.R.V.I.S.: Session interrupted. Saving history...')
-            save_chat_history(history)
-            break
-        except Exception as e:
-            logger.error(f'Unexpected error: {e}')
-
-
-if __name__ == '__main__':
-    main()
+        model=os.gete
