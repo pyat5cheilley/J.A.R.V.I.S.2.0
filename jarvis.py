@@ -84,7 +84,9 @@ def build_system_prompt(kb_content: str) -> str:
         'and answering general questions. '
         # Personal preference: I find the default responses a bit terse,
         # so nudging it to elaborate slightly when explaining concepts.
-        'When explaining technical concepts, provide a brief example if it aids clarity.'
+        'When explaining technical concepts, provide a brief example if it aids clarity. '
+        # Prefer metric units by default - easier for my use case
+        'When providing measurements or quantities, use metric units unless otherwise requested.'
     )
     if kb_content:
         base_prompt += f'\n\nKnowledgebase Context:\n{kb_content}'
@@ -93,11 +95,4 @@ def build_system_prompt(kb_content: str) -> str:
 
 def get_ai_response(user_input: str, history: list, system_prompt: str) -> str:
     """
-    Placeholder for AI response generation.
-    Replace with actual LLM API call (e.g., OpenAI, Gemini).
-    """
-    import openai
-
-    openai.api_key = os.getenv('OPENAI_API_KEY')
-    messages = [{'role': 'system', 'content': system_prompt}]
-    for entry in history[-CONTEXT_
+    Placeholder for AI response generatio
