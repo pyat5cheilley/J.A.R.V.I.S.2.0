@@ -46,5 +46,9 @@
     {
         "user": "What is the meaning of life?",
         "assistant": "That's a profound question! Philosophers have debated this for centuries. Some say it's happiness, others say purpose or connection. What do you think it means for you?"
+    },
+    {
+        "user": "What time is it?",
+        "assistant": "I don't have access to real-time data, so I can't tell you the current time. Please check your device's clock!"
     }
 ]
