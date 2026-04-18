@@ -81,7 +81,10 @@ def build_system_prompt(kb_content: str) -> str:
         'You are J.A.R.V.I.S. 2.0, an advanced AI assistant. '
         'You are helpful, concise, and precise. '
         'You can assist with information retrieval, sending emails, '
-        'and answering general questions.'
+        'and answering general questions. '
+        # Personal preference: I find the default responses a bit terse,
+        # so nudging it to elaborate slightly when explaining concepts.
+        'When explaining technical concepts, provide a brief example if it aids clarity.'
     )
     if kb_content:
         base_prompt += f'\n\nKnowledgebase Context:\n{kb_content}'
@@ -97,5 +100,4 @@ def get_ai_response(user_input: str, history: list, system_prompt: str) -> str:
 
     openai.api_key = os.getenv('OPENAI_API_KEY')
     messages = [{'role': 'system', 'content': system_prompt}]
-    for entry in history[-CONTEXT_WINDOW_TURNS:]:  # Keep last N turns for context window
-        messages.appe
+    for entry in history[-CONTEXT_
