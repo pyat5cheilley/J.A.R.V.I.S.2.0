@@ -69,10 +69,8 @@ private_mode_responses = [
 # Chat starting responses shown when a new conversation begins
 chat_starting_responses = [
     "Let's start our conversation! How can I help you today?",
-    "Hello! I'm ready to assist. What's on your mind?",
-    "Great to see you! What can I do for you?",
-    "Hey there! I'm all ears. What do you need?",
-    # Added a couple more casual options -- feels more natural to me
-    "Hi! What can I help you with today?",
-    "Ready when you are! What would you like to talk about?"
+    "Hello! What can I do for you?",
+    "Hey there! Ready to assist. What do you need?",
+    "Good to see you! What's on your mind?",
+    "Hi! I'm here and ready. How can I assist?"
 ]
