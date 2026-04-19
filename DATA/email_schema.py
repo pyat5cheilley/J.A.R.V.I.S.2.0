@@ -83,9 +83,9 @@ email_prompts ={
         "prompt": """
         Please provide the following details for a networking email:
         - Recipient's Name: {Recipient_Name}
-        - Recipient's Company: {Company_Name}
-        - How You Found Them: {How_Found}
-        - Reason for Reaching Out: {Reason}
+        - How You Know Them / Mutual Connection: {Connection}
+        - Purpose of Reaching Out: {Purpose}
+        - Your LinkedIn Profile (optional): {LinkedIn}
         - Your Name: {Your_Name}
     """
     },
