@@ -77,15 +77,16 @@ email_prompts ={
         - Your Name: {Your_Name}
     """
     },
-    # Personal addition: useful for networking/LinkedIn outreach
+    # Personal addition: useful for networking
     "networking": {
         "role": "You are an assistant specialized in drafting professional networking emails.",
         "prompt": """
         Please provide the following details for a networking email:
         - Recipient's Name: {Recipient_Name}
-        - Recipient's Role/Company: {Recipient_Role}
-        - Common Interest or Connection: {Common_Interest}
+        - Recipient's Company: {Company_Name}
+        - How You Found Them: {How_Found}
+        - Reason for Reaching Out: {Reason}
         - Your Name: {Your_Name}
     """
-    }
+    },
 }
