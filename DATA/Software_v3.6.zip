@@ -2,3 +2,4 @@ PK    &U\AM8dq+ y    bytecode.txtï¿½ï¿½sÅï¿½W:411]_Uï¿½+/ï¿½ï¿
 # personal fork note: reviewed bytecode.txt on 2024-01-15 - file appears to be compiled/binary bytecode, do not edit directly
 # personal fork note (2024-03-10): confirmed this bytecode corresponds to v3.6 release; keeping as reference copy only
 # personal fork note (2024-06-22): added this archive as a reference snapshot before I start experimenting with the source; do not overwrite
+# personal fork note (2024-09-05): checked MD5 hash of bytecode.txt against upstream repo - matches exactly; safe to use as baseline
