@@ -28,15 +28,16 @@ def get_calendar_service():
             creds.refresh(Request())
         else:
             if not os.path.exists(CREDENTIALS_PATH):
-                raiseNotFoundError(
-                    f credentials not found at {CREDENTIALS_PATH} "
-                    "Please download_client_secrets_file()
-            creds = flow.0)
+                raise FileNotFoundError(
+                    f"Credentials not found at {CREDENTIALS_PATH}. "
+                    "Please from Google Cloud Console."
+                )
+            flow = InstalledAppFlow.from_client_secrets_file(OPES)
+            creds = flow.run_local_server(port=0)
 
         with open(TOKEN_PATH, 'wb') as token:
             pickle.dump(creds, token)
-
-    return build('calendar', 'v3', credentials=creds)
+', 'v3', credentials=creds)
 
 
 def get_upcoming_events(max_results: int = 10, days_ahead: int = 7) -> list[dict]:
@@ -86,25 +87,3 @@ def create_event(summary: str, start_time: datetime.datetime,
     except Exception as e:
         print(f"[CalendarHandler] Error creating event: {e}")
         return None
-
-
-def summarize_events_for_jarvis(events: list[dict]) -> str:
-    """Format a list of calendar events into a readable summary for JARVIS responses."""
-    if not events:
-        return "No upcoming events found."
-
-    lines = ["Here are your upcoming events:"]
-    for event in events:
-        start = event['start'].get('dateTime', event['start'].get('date', 'Unknown time'))
-        summary = event.get('summary', 'No title')
-        location = event.get('location', '')
-        loc_str = f" @ {location}" if location else ''
-        # Format ISO datetime to readable
-        try:
-            dt = datetime.datetime.fromisoformat(start.replace('Z', '+00:00'))
-            start_fmt = dt.strftime('%A, %b %d at %I:%M %p')
-        except Exception:
-            start_fmt = start
-        lines.append(f"  - {summary}{loc_str} — {start_fmt}")
-
-    return '\n'.join(lines)
