@@ -55,8 +55,12 @@ def add_reminder(title: str, remind_at: datetime, notes: str = "") -> dict:
     return reminder
 
 
-def get_due_reminders(within_minutes: int = 10) -> list[dict]:
-    """Return reminders due within the next `within_minutes` minutes."""
+def get_due_reminders(within_minutes: int = 15) -> list[dict]:
+    """Return reminders due within the next `within_minutes` minutes.
+
+    Default window bumped from 10 to 15 minutes so JARVIS has a bit more
+    lead time to actually announce reminders before they slip by.
+    """
     reminders = load_reminders()
     now = datetime.utcnow()
     window = now + timedelta(minutes=within_minutes)
@@ -100,26 +104,4 @@ def delete_reminder(reminder_id: int) -> bool:
 
 def summarize_reminders_for_jarvis(within_hours: int = 24) -> str:
     """Return a human-readable summary of upcoming reminders for the AI prompt."""
-    reminders = load_reminders()
-    now = datetime.utcnow()
-    cutoff = now + timedelta(hours=within_hours)
-    upcoming = []
-    for r in reminders:
-        if r.get("done"):
-            continue
-        try:
-            remind_at = datetime.fromisoformat(r["remind_at"])
-        except (KeyError, ValueError):
-            continue
-        if now <= remind_at <= cutoff:
-            upcoming.append(r)
-
-    if not upcoming:
-        return f"No reminders in the next {within_hours} hour(s)."
-
-    lines = [f"Upcoming reminders (next {within_hours}h):"]
-    for r in sorted(upcoming, key=lambda x: x["remind_at"]):
-        ts = datetime.fromisoformat(r["remind_at"]).strftime("%Y-%m-%d %H:%M")
-        note = f" — {r['notes']}" if r.get("notes") else ""
-        lines.append(f"  • [{ts}] {r['title']}{note}")
-    return "\n".join(lines)
+    re
