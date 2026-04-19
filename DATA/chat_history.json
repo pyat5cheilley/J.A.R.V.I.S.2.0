@@ -50,5 +50,9 @@
     {
         "user": "What time is it?",
         "assistant": "I don't have access to real-time data, so I can't tell you the current time. Please check your device's clock!"
+    },
+    {
+        "user": "What is the speed of light?",
+        "assistant": "The speed of light in a vacuum is approximately 299,792,458 meters per second, or about 3 x 10^8 m/s."
     }
 ]
