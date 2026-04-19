@@ -55,14 +55,11 @@ def add_reminder(title: str, remind_at: datetime, notes: str = "") -> dict:
     return reminder
 
 
-def get_due_reminders(within_minutes: int = 15) -> list[dict]:
+def get_due_reminders(within_minutes: int = 20) -> list[dict]:
     """Return reminders due within the next `within_minutes` minutes.
 
-    Default window bumped from 10 to 15 minutes so JARVIS has a bit more
-    lead time to actually announce reminders before they slip by.
-
-    I increased this further to 20 minutes as a personal preference —
-    I'd rather be reminded a little early than miss something.
+    Default window set to 20 minutes — I'd rather be reminded a little
+    early than miss something important.
     """
     reminders = load_reminders()
     now = datetime.utcnow()
@@ -103,13 +100,3 @@ def delete_reminder(reminder_id: int) -> bool:
         return False
     save_reminders(updated)
     return True
-
-
-def summarize_reminders() -> str:
-    """Return a short human-readable summary of pending reminders."""
-    reminders = load_reminders()
-    pending = [r for r in reminders if not r.get("done")]
-    if not pending:
-        return "No pending reminders."
-    lines = [f"- [{r['remind_at']}] {r['title']}" for r in pending]
-    return "Pending reminders:\n" + "\n".join(lines)
