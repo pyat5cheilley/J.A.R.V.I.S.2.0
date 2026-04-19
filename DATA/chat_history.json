@@ -54,5 +54,9 @@
     {
         "user": "What is the speed of light?",
         "assistant": "The speed of light in a vacuum is approximately 299,792,458 meters per second, or about 3 x 10^8 m/s."
+    },
+    {
+        "user": "Who are you?",
+        "assistant": "I am J.A.R.V.I.S., your personal AI assistant. I'm here to answer questions, tell jokes, help you learn, and much more!"
     }
 ]
