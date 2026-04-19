@@ -23,6 +23,9 @@ IMAP_SERVER = os.getenv("IMAP_SERVER", "imap.gmail.com")
 EMAIL_ADDRESS = os.getenv("EMAIL_ADDRESS", "")
 EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD", "")
 
+# Default inbox fetch count - I find 10 more useful than 5 for daily review
+DEFAULT_FETCH_COUNT = 10
+
 
 def send_email(to: str, subject: str, body: str, html: bool = False) -> dict:
     """Send an email to the specified recipient.
@@ -65,11 +68,11 @@ def send_email(to: str, subject: str, body: str, html: bool = False) -> dict:
         return {"success": False, "message": f"Unexpected error: {str(e)}"}
 
 
-def fetch_recent_emails(count: int = 5) -> list[dict]:
+def fetch_recent_emails(count: int = DEFAULT_FETCH_COUNT) -> list[dict]:
     """Fetch the most recent emails from the inbox.
 
     Args:
-        count: Number of recent emails to retrieve.
+        count: Number of recent emails to retrieve. Defaults to DEFAULT_FETCH_COUNT.
 
     Returns:
         List of email dicts with keys: subject, sender, date, snippet.
@@ -89,49 +92,4 @@ def fetch_recent_emails(count: int = 5) -> list[dict]:
 
         for msg_id in reversed(recent_ids):
             _, msg_data = mail.fetch(msg_id, "(RFC822)")
-            raw = msg_data[0][1]
-            msg = email.message_from_bytes(raw)
-
-            subject, encoding = decode_header(msg["Subject"])[0]
-            if isinstance(subject, bytes):
-                subject = subject.decode(encoding or "utf-8", errors="replace")
-
-            sender = msg.get("From", "Unknown")
-            date = msg.get("Date", "Unknown")
-
-            snippet = ""
-            if msg.is_multipart():
-                for part in msg.walk():
-                    if part.get_content_type() == "text/plain":
-                        snippet = part.get_payload(decode=True).decode(errors="replace")[:200]
-                        break
-            else:
-                snippet = msg.get_payload(decode=True).decode(errors="replace")[:200]
-
-            emails.append({"subject": subject, "sender": sender, "date": date, "snippet": snippet.strip()})
-
-        mail.logout()
-
-    except imaplib.IMAP4.error as e:
-        emails.append({"error": f"IMAP error: {str(e)}"})
-    except Exception as e:
-        emails.append({"error": f"Unexpected error: {str(e)}"})
-
-    return emails
-
-
-def summarize_emails_for_jarvis(count: int = 5) -> str:
-    """Return a human-readable summary of recent emails for JARVIS context."""
-    emails = fetch_recent_emails(count)
-    if not emails:
-        return "No emails found."
-    if "error" in emails[0]:
-        return f"Could not fetch emails: {emails[0]['error']}"
-
-    lines = [f"Here are your {len(emails)} most recent emails:\n"]
-    for i, e in enumerate(emails, 1):
-        lines.append(f"{i}. From: {e['sender']}")
-        lines.append(f"   Subject: {e['subject']}")
-        lines.append(f"   Date: {e['date']}")
-        lines.append(f"   Preview: {e['snippet']}\n")
-    return "\n".join(lines)
+         
