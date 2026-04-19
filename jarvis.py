@@ -87,8 +87,14 @@ def build_system_prompt(kb_content: str) -> str:
         # so nudging it to elaborate slightly when explaining concepts.
         'When explaining technical concepts, provide a brief example if it aids clarity. '
         # Prefer metric units by default - easier for my use case
-        'When providing measurements or quantities, use metric units unless otherwise requested.'
+        'When providing measurements or quantities, use metric units unless otherwise requested. '
+        # I prefer responses to be structured with bullet points or numbered lists
+        # when there are multiple steps or items - makes it much easier to skim.
+        'When a response contains multiple steps or items, format them as a numbered list or bullet points.'
     )
     if kb_content:
-        base_prompt += f'\n\nKnowledgebase Context:\n{kb_content}'
+        base_prompt += (
+            '\n\nYou have access to the following knowledgebase:\n'
+            + kb_content
+        )
     return base_prompt
