@@ -32,7 +32,8 @@ KNOWLEDGEBASE_PATH = 'DATA/KNOWLEDGEBASE/disaster_data_converted.md'
 # Keep last N turns for context window - increase if you want more memory,
 # but be mindful of token limits (gpt-3.5-turbo: ~4k, gpt-4: ~8k)
 # Bumped from 20 to 30 - I'm using gpt-4 and want longer conversation memory
-CONTEXT_WINDOW_TURNS = 30
+# Bumped again to 50 - conversations were getting cut off too early
+CONTEXT_WINDOW_TURNS = 50
 
 
 def load_chat_history() -> list:
@@ -91,8 +92,3 @@ def build_system_prompt(kb_content: str) -> str:
     if kb_content:
         base_prompt += f'\n\nKnowledgebase Context:\n{kb_content}'
     return base_prompt
-
-
-def get_ai_response(user_input: str, history: list, system_prompt: str) -> str:
-    """
-    Placeholder for AI response generatio
