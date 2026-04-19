@@ -33,7 +33,8 @@ KNOWLEDGEBASE_PATH = 'DATA/KNOWLEDGEBASE/disaster_data_converted.md'
 # but be mindful of token limits (gpt-3.5-turbo: ~4k, gpt-4: ~8k)
 # Bumped from 20 to 30 - I'm using gpt-4 and want longer conversation memory
 # Bumped again to 50 - conversations were getting cut off too early
-CONTEXT_WINDOW_TURNS = 50
+# Dropped back to 40 - 50 was hitting token limits on longer messages
+CONTEXT_WINDOW_TURNS = 40
 
 
 def load_chat_history() -> list:
@@ -88,13 +89,4 @@ def build_system_prompt(kb_content: str) -> str:
         'When explaining technical concepts, provide a brief example if it aids clarity. '
         # Prefer metric units by default - easier for my use case
         'When providing measurements or quantities, use metric units unless otherwise requested. '
-        # I prefer responses to be structured with bullet points or numbered lists
-        # when there are multiple steps or items - makes it much easier to skim.
-        'When a response contains multiple steps or items, format them as a numbered list or bullet points.'
-    )
-    if kb_content:
-        base_prompt += (
-            '\n\nYou have access to the following knowledgebase:\n'
-            + kb_content
-        )
-    return base_prompt
+        # I 
