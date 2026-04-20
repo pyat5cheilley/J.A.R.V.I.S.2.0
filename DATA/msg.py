@@ -52,6 +52,7 @@ searching_responses = [
     "Let me find that for you. This won't take long."
 ]
 
+# Note: added a couple extra private mode messages that feel less robotic to me
 private_mode_responses = [
     "Opening in private mode for you. Please hold on.",
     "Starting in incognito mode. This will take just a moment.",
@@ -62,14 +63,11 @@ private_mode_responses = [
     "Preparing to open in incognito mode. Hold on!",
     "Switching to private mode. Almost ready!",
     "Opening in private/incognito mode. Please wait.",
-    "Getting everything set up in private mode for you."
+    "Getting everything set up in private mode for you.",
+    "Going incognito — your privacy is my priority.",
+    "Sure, opening that privately for you."
 ]
 
 
 # Chat starting responses shown when a new conversation begins
-# Added a couple more casual/friendly options that feel more natural to me
-chat_starting_responses = [
-    "Let's start our conversation! How",
-    "Hey! What can I help you with today?",
-    "Ready when you are! What's on your mind?"
-]
+# Added a couple more casual/friendly options that feel more natur
