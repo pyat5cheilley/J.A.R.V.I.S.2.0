@@ -85,7 +85,6 @@ email_prompts ={
         - Recipient's Name: {Recipient_Name}
         - How You Know Them / Mutual Connection: {Connection}
         - Purpose of Reaching Out: {Purpose}
-        - Your LinkedIn Profile (optional): {LinkedIn}
         - Your Name: {Your_Name}
     """
     },
