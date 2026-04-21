@@ -29,15 +29,12 @@ def get_calendar_service():
         else:
             if not os.path.exists(CREDENTIALS_PATH):
                 raise FileNotFoundError(
-                    f"Credentials not found at {CREDENTIALS_PATH}. "
-                    "Please from Google Cloud Console."
-                )
-            flow = InstalledAppFlow.from_client_secrets_file(OPES)
-            creds = flow.run_local_server(port=0)
-
+                    f"Credentials not found at {n                    "Please from Google)
+            flow = Instal_secrets_file(CREDENTIALS_PATH,reds = flow.run_localn
         with open(TOKEN_PATH, 'wb') as token:
             pickle.dump(creds, token)
-', 'v3', credentials=creds)
+
+    return build('calendar', 'v3', credentials=creds)
 
 
 def get_upcoming_events(max_results: int = 10, days_ahead: int = 7) -> list[dict]:
