@@ -11,6 +11,11 @@ from typing import Optional
 
 REMINDERS_FILE = "DATA/reminders.json"
 
+# How many minutes before a reminder is due to start surfacing it.
+# Bumped from 20 to 30 — I tend to need a bit more lead time to wrap up
+# whatever I'm doing before switching tasks.
+DEFAULT_REMINDER_WINDOW_MINUTES = 30
+
 
 def load_reminders() -> list[dict]:
     """Load reminders from the local JSON store."""
@@ -55,11 +60,11 @@ def add_reminder(title: str, remind_at: datetime, notes: str = "") -> dict:
     return reminder
 
 
-def get_due_reminders(within_minutes: int = 20) -> list[dict]:
+def get_due_reminders(within_minutes: int = DEFAULT_REMINDER_WINDOW_MINUTES) -> list[dict]:
     """Return reminders due within the next `within_minutes` minutes.
 
-    Default window set to 20 minutes — I'd rather be reminded a little
-    early than miss something important.
+    Default window set to 30 minutes — gives enough time to finish a
+    current task before switching focus.
     """
     reminders = load_reminders()
     now = datetime.utcnow()
