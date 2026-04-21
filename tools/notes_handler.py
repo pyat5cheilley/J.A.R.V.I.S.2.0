@@ -51,8 +51,9 @@ def add_note(title: str, content: str, tags: Optional[list[str]] = None) -> dict
         dict: The newly created note object.
     """
     notes = load_notes()
+    # Using full UUID (not truncated) to avoid ID collisions over time
     note = {
-        "id": str(uuid.uuid4())[:8],
+        "id": str(uuid.uuid4()),
         "title": title.strip(),
         "content": content.strip(),
         "tags": [t.lower().strip() for t in (tags or [])],
@@ -68,7 +69,7 @@ def get_note(note_id: str) -> Optional[dict]:
     """Retrieve a single note by its ID.
 
     Args:
-        note_id (str): The short UUID of the note.
+        note_id (str): The UUID of the note.
 
     Returns:
         dict | None: The note object, or None if not found.
@@ -106,57 +107,3 @@ def update_note(
             save_notes(notes)
             return note
     return None
-
-
-def delete_note(note_id: str) -> bool:
-    """Delete a note by ID.
-
-    Args:
-        note_id (str): ID of the note to remove.
-
-    Returns:
-        bool: True if the note was found and deleted, False otherwise.
-    """
-    notes = load_notes()
-    filtered = [n for n in notes if n["id"] != note_id]
-    if len(filtered) == len(notes):
-        return False
-    save_notes(filtered)
-    return True
-
-
-def search_notes(query: str) -> list[dict]:
-    """Search notes by keyword across title, content, and tags.
-
-    Args:
-        query (str): Search term (case-insensitive).
-
-    Returns:
-        list[dict]: Notes whose title, content, or tags contain the query.
-    """
-    q = query.lower().strip()
-    results = []
-    for note in load_notes():
-        if (
-            q in note["title"].lower()
-            or q in note["content"].lower()
-            or any(q in tag for tag in note["tags"])
-        ):
-            results.append(note)
-    return results
-
-
-def list_notes(tag_filter: Optional[str] = None) -> list[dict]:
-    """List all notes, optionally filtered by tag.
-
-    Args:
-        tag_filter (str, optional): If provided, only return notes with this tag.
-
-    Returns:
-        list[dict]: Matching notes sorted by creation date (newest first).
-    """
-    notes = load_notes()
-    if tag_filter:
-        tf = tag_filter.lower().strip()
-        notes = [n for n in notes if tf in n["tags"]]
-    return sorted(notes, key=lambda n: n["created_at"], reverse=True)
