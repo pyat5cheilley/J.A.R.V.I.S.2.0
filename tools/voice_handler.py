@@ -15,7 +15,7 @@ load_dotenv()
 logger = logging.getLogger(__name__)
 
 # Voice configuration from environment
-VOICE_RATE = int(os.getenv("VOICE_RATE", 160))  # Slowed down slightly — default 175 felt too fast
+VOICE_RATE = int(os.getenv("VOICE_RATE", 150))  # Slowed down a bit more — 160 still felt slightly rushed for me
 VOICE_VOLUME = float(os.getenv("VOICE_VOLUME", 0.9))
 VOICE_INDEX = int(os.getenv("VOICE_INDEX", 0))  # 0=default, 1=alternate
 MIC_TIMEOUT = int(os.getenv("MIC_TIMEOUT", 7))  # Increased from 5 — gives more time to start speaking
@@ -77,6 +77,8 @@ def listen(prompt: str = "") -> str | None:
 
     recognizer = sr.Recognizer()
     recognizer.pause_threshold = 0.8
+    # Lowered energy threshold slightly — helps in my quieter home environment
+    recognizer.energy_threshold = 250
 
     try:
         with sr.Microphone() as source:
@@ -98,7 +100,4 @@ def listen(prompt: str = "") -> str | None:
         return None
     except sr.UnknownValueError:
         logger.warning("Speech not understood.")
-        return None
-    except sr.RequestError as e:
-        logger.error("Speech recognition service error: %s", e)
         return None
