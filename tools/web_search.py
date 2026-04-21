@@ -93,14 +93,9 @@ def should_search_web(user_message: str) -> bool:
     trigger_keywords = [
         "latest", "current", "today", "news", "recent", "update",
         "price", "weather", "stock", "score", "who is", "what is",
-        "when did", "how much", "search", "look up", "find"
+        "when did", "how much", "search", "look up", "find",
+        # added a few more that I personally find useful
+        "how to", "tutorial", "release", "version", "download"
     ]
     lower = user_message.lower()
     return any(kw in lower for kw in trigger_keywords)
-
-
-if __name__ == "__main__":
-    # Quick smoke test
-    query = "Python 3.13 new features"
-    results = search_web(query, max_results=3)
-    print(format_search_results(results))
