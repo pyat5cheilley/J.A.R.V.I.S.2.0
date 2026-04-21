@@ -35,7 +35,8 @@ KNOWLEDGEBASE_PATH = 'DATA/KNOWLEDGEBASE/disaster_data_converted.md'
 # Bumped again to 50 - conversations were getting cut off too early
 # Dropped back to 40 - 50 was hitting token limits on longer messages
 # Dropped to 30 - switched back to gpt-3.5-turbo to save on API costs
-CONTEXT_WINDOW_TURNS = 30
+# Dropped to 20 - 30 was still occasionally hitting limits with the knowledgebase injected
+CONTEXT_WINDOW_TURNS = 20
 
 
 def load_chat_history() -> list:
@@ -88,5 +89,4 @@ def build_system_prompt(kb_content: str) -> str:
         # Personal preference: I find the default responses a bit terse,
         # so nudging it to elaborate slightly when explaining concepts.
         'When explaining technical concepts, provide a brief example if it aids clarity. '
-        # Prefer metric units by default - easier for my use case
-        'When providing measurements or q
+        # Prefer metric units by defa
