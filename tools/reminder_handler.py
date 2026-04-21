@@ -65,6 +65,8 @@ def get_due_reminders(within_minutes: int = DEFAULT_REMINDER_WINDOW_MINUTES) -> 
 
     Default window set to 30 minutes — gives enough time to finish a
     current task before switching focus.
+
+    Results are sorted by remind_at so the most urgent ones come first.
     """
     reminders = load_reminders()
     now = datetime.utcnow()
@@ -79,6 +81,8 @@ def get_due_reminders(within_minutes: int = DEFAULT_REMINDER_WINDOW_MINUTES) -> 
             continue
         if now <= remind_at <= window:
             due.append(r)
+    # Sort by soonest due first so the caller doesn't have to worry about ordering
+    due.sort(key=lambda r: r["remind_at"])
     return due
 
 
@@ -98,10 +102,4 @@ def mark_done(reminder_id: int) -> bool:
 
 
 def delete_reminder(reminder_id: int) -> bool:
-    """Delete a reminder by its ID."""
-    reminders = load_reminders()
-    updated = [r for r in reminders if r.get("id") != reminder_id]
-    if len(updated) == len(reminders):
-        return False
-    save_reminders(updated)
-    return True
+    """Delete a reminder by its ID
