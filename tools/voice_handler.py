@@ -15,10 +15,10 @@ load_dotenv()
 logger = logging.getLogger(__name__)
 
 # Voice configuration from environment
-VOICE_RATE = int(os.getenv("VOICE_RATE", 175))
+VOICE_RATE = int(os.getenv("VOICE_RATE", 160))  # Slowed down slightly — default 175 felt too fast
 VOICE_VOLUME = float(os.getenv("VOICE_VOLUME", 0.9))
 VOICE_INDEX = int(os.getenv("VOICE_INDEX", 0))  # 0=default, 1=alternate
-MIC_TIMEOUT = int(os.getenv("MIC_TIMEOUT", 5))
+MIC_TIMEOUT = int(os.getenv("MIC_TIMEOUT", 7))  # Increased from 5 — gives more time to start speaking
 MIC_PHRASE_LIMIT = int(os.getenv("MIC_PHRASE_LIMIT", 10))
 
 # Thread lock to prevent concurrent speech
@@ -102,15 +102,3 @@ def listen(prompt: str = "") -> str | None:
     except sr.RequestError as e:
         logger.error("Speech recognition service error: %s", e)
         return None
-    except Exception as e:
-        logger.error("Unexpected listen error: %s", e)
-        return None
-
-
-def is_voice_available() -> bool:
-    """Check whether a microphone is available on this system."""
-    try:
-        mics = sr.Microphone.list_microphone_names()
-        return len(mics) > 0
-    except Exception:
-        return False
