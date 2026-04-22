@@ -52,13 +52,14 @@ def add_note(title: str, content: str, tags: Optional[list[str]] = None) -> dict
     """
     notes = load_notes()
     # Using full UUID (not truncated) to avoid ID collisions over time
+    now = datetime.now().isoformat()  # capture once so created_at == updated_at exactly
     note = {
         "id": str(uuid.uuid4()),
         "title": title.strip(),
         "content": content.strip(),
         "tags": [t.lower().strip() for t in (tags or [])],
-        "created_at": datetime.now().isoformat(),
-        "updated_at": datetime.now().isoformat(),
+        "created_at": now,
+        "updated_at": now,
     }
     notes.append(note)
     save_notes(notes)
@@ -101,9 +102,3 @@ def update_note(
                 note["title"] = title.strip()
             if content is not None:
                 note["content"] = content.strip()
-            if tags is not None:
-                note["tags"] = [t.lower().strip() for t in tags]
-            note["updated_at"] = datetime.now().isoformat()
-            save_notes(notes)
-            return note
-    return None
